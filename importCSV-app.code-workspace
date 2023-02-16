@@ -4,5 +4,28 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"sqltools.connections": [
+			{
+				"previewLimit": 100,
+				"driver": "SQLite",
+				"name": "Officium_MGM",
+				"database": "C:\\Users\\czelakow\\Developer\\officium-mgm\\mock.db",
+				"connectionTimeout": 15
+			},
+			{
+				"mysqlOptions": {
+					"authProtocol": "default"
+				},
+				"previewLimit": 50,
+				"server": "localhost",
+				"port": 3306,
+				"driver": "MySQL",
+				"name": "ImportCSV",
+				"database": "sys",
+				"username": "root",
+				"password": ""
+			}
+		]
+	}
 }
