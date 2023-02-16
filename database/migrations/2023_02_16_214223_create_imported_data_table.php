@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('given_name');
             $table->string('middle_initial');
             $table->string('surname');
-            $table->string('streetaddress');
+            $table->string('street_address');
             $table->string('city');
             $table->string('state');
             $table->string('zip_code');
