@@ -10,6 +10,13 @@ class ImportedData extends Model
     use HasFactory;
 
         /**
+     * The database connection that should be used by the model.
+     *
+     * @var string
+     */
+    protected $connection = 'netinteractive';
+
+        /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
