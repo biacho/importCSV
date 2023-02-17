@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ExcelCSVController;
+use App\Http\Controllers\ImportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +18,5 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('excel-csv-file', [ExcelCSVController::class, 'index']);
-Route::post('import-excel-csv-file', [ExcelCSVController::class, 'importExcelCSV']);
-
+Route::get('/', [ImportController::class, 'index']);
+Route::post('import', [ImportController::class, 'importExcelCSV']);

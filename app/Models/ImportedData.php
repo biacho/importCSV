@@ -14,7 +14,7 @@ class ImportedData extends Model
      *
      * @var string
      */
-    protected $connection = 'netinteractive';
+    protected $connection = 'mysql';
 
         /**
      * The attributes that are mass assignable.
