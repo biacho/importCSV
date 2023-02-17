@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 namespace App\Http\Controllers;
  
 use Illuminate\Http\Request;
- 
-use App\Exports\UsersExport;
- 
 use App\Imports\CSVImport;
 use App\Models\ImportedData;
 use Maatwebsite\Excel\Facades\Excel;
@@ -35,7 +32,9 @@ class ImportController extends Controller
            'file' => 'required',
  
         ]);
- 
+        
+        // dd($request->file('file'));
+
         Excel::import(new CSVImport(),$request->file('file'));
  
             
