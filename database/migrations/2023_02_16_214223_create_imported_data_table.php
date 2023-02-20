@@ -14,21 +14,21 @@ return new class extends Migration
         Schema::create('imported_data', function (Blueprint $table) {
             $table->id();
             $table->integer('number');
-            $table->string('gender');
-            $table->string('name_set');
-            $table->string('title');
+            $table->string('gender')->nullable();
+            $table->string('name_set')->nullable();
+            $table->string('title')->nullable();
             $table->string('given_name');
-            $table->string('middle_initial');
+            $table->string('middle_initial')->nullable();
             $table->string('surname');
-            $table->string('street_address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('zip_code');
-            $table->string('country');
-            $table->string('email_address');
-            $table->string('password');
-            $table->string('username');
-            $table->string('browser_user_agent');
+            $table->string('street_address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('country')->nullable();
+            $table->string('email_address')->nullable();
+            $table->string('password')->nullable();
+            $table->string('username')->nullable();
+            $table->string('browser_user_agent')->nullable();
             $table->timestamps();
         });
     }

@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
-namespace App\Http\Controllers;
  
 use Illuminate\Http\Request;
 use App\Imports\CSVImport;
 use App\Models\ImportedData;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException as ExcelValidation;
  
 use App\Models\User;
+use Dotenv\Exception\ValidationException as ExceptionValidationException;
 
 class ImportController extends Controller
 {
@@ -35,9 +35,18 @@ class ImportController extends Controller
         
         // dd($request->file('file'));
 
-        Excel::import(new CSVImport(),$request->file('file'));
- 
-            
-        return redirect('/')->with('status', 'The file has been excel/csv imported to database in Laravel 10');
+        $import = new CSVImport();
+        $import->import($request->file('file'));
+        // Excel::import(new CSVImport(),$request->file('file'));
+        
+        foreach ($import->failures() as $failure) {
+            $failure->row(); // row that went wrong
+            $failure->attribute(); // either heading key (if using heading row concern) or column index
+            $failure->errors(); // Actual error messages from Laravel validator
+            $failure->values(); // The values of the row that has failed.
+        }
+        
+        
+        return redirect('/')->with('status', 'Import Done.');
     }
 }
