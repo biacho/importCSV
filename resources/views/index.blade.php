@@ -14,11 +14,11 @@
     </head>
     <body class="antialiased">
         <div class="container">
-        @if(session('status'))
+        <!-- @if(session('status'))
             <div class="alert alert-success">
                 {{ session('status') }}
             </div>
-        @endif
+        @endif -->
 
 
         <form id="import-csv-form" method="POST"  action="{{ url('import') }}" accept-charset="utf-8" enctype="multipart/form-data">
@@ -39,6 +39,15 @@
                 </div>
             </div>     
         </form>
+
+        <div class="pt-3">
+            @if(count($reportData) > 0)
+                <p>{{ $reportData['importTime'] }}</p>
+            @else
+                <p>Zief</p>
+            @endif
+        </div>
+
 
 <!-- 
             <div class="position-absolute top-50 start-50 translate-middle">
