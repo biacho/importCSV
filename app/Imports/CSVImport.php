@@ -53,7 +53,7 @@ class CSVImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnFailu
 
             // Can also use callback validation rules
             'username' => function($attribute, $value, $onFailure) {
-                is_null($value) ? $onFailure('Username is null') : "";
+                is_null($value) ? $onFailure('Cell ' , $attribute , ' is empty.') : "";
             }   
         ];
     }
