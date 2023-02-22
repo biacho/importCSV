@@ -33,6 +33,17 @@ class ImportController extends Controller
  
         ]);
         
+        //
+        // Prawidlowa implementacja importu danych z pliku CSV !! <facepalm>
+        //
+        // $file = fopen($request->file('file'), "r");
+        // $data = [];
+        // while (($getData = fgetcsv($file, 10000, ",")) !== FALSE)
+        // {
+        //     array_push($data, $getData[1]);
+        // }
+        // dd($data);
+ 
         $reportData = [];
 
 
