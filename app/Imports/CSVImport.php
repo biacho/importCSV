@@ -47,14 +47,20 @@ class CSVImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnFailu
     public function rules(): array
     {
         return [
-            // 'username' => Rule::required(),
-            // 'GivenName' => Rule::required(), 
-            // 'Surname' => Rule::required(),
+            'username' => 'required',
+            'givenname' => 'required', 
+            'surname' => 'required',
 
             // Can also use callback validation rules
-            'username' => function($attribute, $value, $onFailure) {
-                is_null($value) ? $onFailure('Cell ' , $attribute , ' is empty.') : "";
-            }   
+            // 'username' => function($attribute, $value, $onFailure) {
+            //     is_null($value) ? $onFailure('Cell ' , $attribute , ' is empty.') : "";
+            // },   
+            // 'givenname' => function($attribute, $value, $onFailure) {
+            //     is_null($value) ? $onFailure('Cell ' , $attribute , ' is empty.') : "";
+            // },   
+            // 'surname' => function($attribute, $value, $onFailure) {
+            //     is_null($value) ? $onFailure('Cell ' , $attribute , ' is empty.') : "";
+            // },   
         ];
     }
 
@@ -64,9 +70,9 @@ class CSVImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnFailu
     public function customValidationMessages()
     {
         return [
-            'username.require' => 'Cell :attribute is empty.',
-            'givenname.require' => 'Cell :attribute is empty.',
-            // 'surname.require' => 'Cell :attribute is empty.',
+            'username.required' => 'Cell :attribute is empty.',
+            'givenname.required' => 'Cell :attribute is empty.',
+            'surname.required' => 'Cell :attribute is empty.',
         ];
     }
 
@@ -76,7 +82,7 @@ class CSVImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnFailu
     // public function onFailure(Failure ...$failures)
     // {
     //     // Handle the failures how you'd like.
-    //     dd($failures);
+    //     $failures['row'] = '1';
     // }
 
     public function endColumn(): string

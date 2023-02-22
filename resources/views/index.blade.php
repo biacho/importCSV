@@ -13,37 +13,55 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     </head>
     <body class="antialiased">
-        <div class="container">
-        @if(session('status'))
-            <div class="alert alert-success">
-                {{ session('status') }}
-            </div>
-        @endif
-
-
-        <form id="import-csv-form" method="POST"  action="{{ url('import') }}" accept-charset="utf-8" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
-
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <input type="file" name="file" placeholder="Choose file">
-                    </div>
-                    @error('file')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                    @enderror
-                </div>              
-
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+        <div class="container position-absolute top-50 start-50 translate-middle">
+            <form id="import-csv-form" method="POST"  action="{{ url('import') }}" accept-charset="utf-8" enctype="multipart/form-data">
+                @csrf
+                <div class="row mb-3">
+                    <div>
+                        <label for="file" class="form-label">Choose CSV file to import.</label>
+                        <input class="form-control form-control-lg" id="file" type="file" name="file">
+                        @error('file')
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>            
                 </div>
-            </div>     
-        </form>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                    </div>
+                </div>     
+            </form>
 
-<!-- 
-            <div class="position-absolute top-50 start-50 translate-middle">
-                <button id="import_btn" class="btn btn-primary btn-lg" type="button">Import CSV File</button>
-            </div> -->
+        <!-- @if(session('reportData')) -->
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">Report</h4>
+                
+                <div class="w-25">
+                    <table class="table table-sm table-borderless align-middle">
+                        <tbody>
+                            <tr>
+                                <th scope="row" style="text-align: end">Import Time (sec):</th>
+                                <td>{{ session('reportData.importTime') }}</td>
+                            </tr>
+                                <tr>
+                                <th scope="row" style="text-align: end">Rows to import:</th>
+                                <td>{{ session('reportData.rowsToImport') }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="text-align: end">Imported:</th>
+                                <td>{{ session('reportData.importSuccess') }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="text-align: end">Failed:</th>
+                                <td>{{ session('reportData.importFailure') }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>            
+            <div class="">
+            </div>
+        <!-- @endif -->
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
