@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Imports\CSVImport;
@@ -18,10 +19,9 @@ class ImportController extends Controller
     */
     public function index()
     {
-        $reportData = [];
-       return view('index', ['reportData' => $reportData]);
+        return view('index');
     }
-    
+
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -32,7 +32,7 @@ class ImportController extends Controller
            'file' => 'required',
  
         ]);
-        
+ 
         $reportData = [];
 
 
@@ -62,9 +62,11 @@ class ImportController extends Controller
         $reportData['importFailure'] = $failures;
         $reportData['importSuccess'] = $rowsToImport - $failures;
 
-        // dd($reportData);
-        // return redirect()->route('/')->with(['reportData' => $reportData]);
-        return redirect()->back()->with(compact('reportData'));
-        // return view('index', ['reportData' => $reportData]);
+        return redirect('/')->with(['reportData' => $reportData]);
+    }
+
+    public function importCSV(Request $request)
+    {
+
     }
 }
