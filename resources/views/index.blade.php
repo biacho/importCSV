@@ -14,12 +14,18 @@
     </head>
     <body class="antialiased">
         <div class="container position-absolute top-50 start-50 translate-middle">
-            <form id="import-csv-form" method="POST"  action="{{ url('import') }}" accept-charset="utf-8" enctype="multipart/form-data">
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Holy guacamole!</strong> {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+            <form id="import-csv-form" method="POST"  action="{{ url('load') }}" accept-charset="utf-8" enctype="multipart/form-data">
                 @csrf
                 <div class="row mb-3">
                     <div>
                         <label for="file" class="form-label">Choose CSV file to import.</label>
-                        <input class="form-control form-control-lg" id="file" type="file" name="file">
+                        <input class="form-control form-control-lg" id="file" type="file" name="file" onchange="trigger()">
                         @error('file')
                             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
@@ -32,6 +38,15 @@
                 </div>     
             </form>
 
+            <div>
+                
+                <select class="form-select" aria-label="Header">
+                    <option selected></option>
+                    @foreach($headers as $header)
+                        <option value="{{ $header->id }}">{{$header->name }}</option>
+                    @endforeach
+                </select>
+            </div>
         <!-- @if(session('reportData')) -->
             <div class="alert alert-info" role="alert">
                 <h4 class="alert-heading">Report</h4>
@@ -64,6 +79,35 @@
         <!-- @endif -->
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="colMapping" tabindex="-1" aria-labelledby="colMappingLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="colMappingLabel">Column Mapping</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Import</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <script>
+            function trigger() {
+                console.log('Works!');
+                const modalToggle = document.getElementById('colMapping'); 
+                const mappingModal = new bootstrap.Modal('#colMapping', {
+                    keyboard: false                
+                });
+                mappingModal.show(modalToggle)
+            }
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
     </body>

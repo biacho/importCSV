@@ -23,6 +23,9 @@ class ImportedData extends Model
      */
     protected $fillable = [
         'number',
+        'number',
+        'number',
+        'number',
         'gender',
         'name_set',
         'title',
