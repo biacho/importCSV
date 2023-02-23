@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\ImportCSVController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,5 @@ use App\Http\Controllers\ImportController;
 Route::get('/', [ImportController::class, 'index']);
 Route::post('import', [ImportController::class, 'importExcelCSV']);
 
-Route::get('/importCSV', [])
+Route::get('/importCSV', [ImportCSVController::class, 'show']);
+Route::post('/load', [ImportCSVController::class, 'importCSV']);

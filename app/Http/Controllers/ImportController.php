@@ -64,9 +64,4 @@ class ImportController extends Controller
 
         return redirect('/')->with(['reportData' => $reportData]);
     }
-
-    public function importCSV(Request $request)
-    {
-
-    }
 }
