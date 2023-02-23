@@ -32,17 +32,6 @@ class ImportController extends Controller
            'file' => 'required',
  
         ]);
-        
-        //
-        // Prawidlowa implementacja importu danych z pliku CSV !! <facepalm>
-        //
-        // $file = fopen($request->file('file'), "r");
-        // $data = [];
-        // while (($getData = fgetcsv($file, 10000, ",")) !== FALSE)
-        // {
-        //     array_push($data, $getData[1]);
-        // }
-        // dd($data);
  
         $reportData = [];
 
@@ -74,5 +63,10 @@ class ImportController extends Controller
         $reportData['importSuccess'] = $rowsToImport - $failures;
 
         return redirect('/')->with(['reportData' => $reportData]);
+    }
+
+    public function importCSV(Request $request)
+    {
+
     }
 }
