@@ -14,22 +14,22 @@ class HeadersSeeder extends Seeder
     public function run(): void
     {
         DB::table('headers')->insert([
-            ['name' => 'number'],
-            ['name' => 'gender'],
-            ['name' => 'name_set'],
-            ['name' => 'title'],
-            ['name' => 'given_name'],
-            ['name' => 'middle_initial'],
-            ['name' => 'surname'],
-            ['name' => 'street_address'],
-            ['name' => 'city'],
-            ['name' => 'state'],
-            ['name' => 'zip_code'],
-            ['name' => 'country'],
-            ['name' => 'email_address'],
-            ['name' => 'password'],
-            ['name' => 'username'],
-            ['name' => 'browser_user_agent']
+            ['name' => 'number', 'oryginal_name' => 'Number'],
+            ['name' => 'gender', 'oryginal_name' => 'Gender'],
+            ['name' => 'name_set', 'oryginal_name' => 'NameSet'],
+            ['name' => 'title', 'oryginal_name' => 'Title'],
+            ['name' => 'given_name', 'oryginal_name' => 'GivenName'],
+            ['name' => 'middle_initial', 'oryginal_name' => 'MiddleInitial'],
+            ['name' => 'surname', 'oryginal_name' => 'Surname'],
+            ['name' => 'street_address', 'oryginal_name' => 'StreetAddress'],
+            ['name' => 'city', 'oryginal_name' => 'City'],
+            ['name' => 'state', 'oryginal_name' => 'State'],
+            ['name' => 'zip_code', 'oryginal_name' => 'ZipCode'],
+            ['name' => 'country', 'oryginal_name' => 'Country'],
+            ['name' => 'email_address', 'oryginal_name' => 'EmailAddress'],
+            ['name' => 'password', 'oryginal_name' => 'Password'],
+            ['name' => 'username', 'oryginal_name' => 'Username'],
+            ['name' => 'browser_user_agent', 'oryginal_name' => 'BrowserUserAgent']
         ]);
     }
 }

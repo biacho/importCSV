@@ -44,7 +44,7 @@ class ImportController extends Controller
         $start_time = microtime(true);
         $import = new CSVImport();
         $import->import($request->file('file'));
-        $end_time = microtime(true);
+            
         
 
         $execution_time = ($end_time - $start_time);

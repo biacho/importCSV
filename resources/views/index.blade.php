@@ -20,86 +20,72 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-            <form id="import-csv-form" method="POST"  action="{{ url('load') }}" accept-charset="utf-8" enctype="multipart/form-data">
-                @csrf
-                <div class="row mb-3">
-                    <div>
-                        <label for="file" class="form-label">Choose CSV file to import.</label>
-                        <input class="form-control form-control-lg" id="file" type="file" name="file" onchange="trigger()">
-                        @error('file')
-                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>            
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
-                    </div>
-                </div>     
-            </form>
 
+        <div class="row mb-3">
             <div>
-                
-                <select class="form-select" aria-label="Header">
-                    <option selected></option>
-                    @foreach($headers as $header)
-                        <option value="{{ $header->id }}">{{$header->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        <!-- @if(session('reportData')) -->
+                <label for="file" class="form-label">Choose CSV file to import.</label>
+                <input class="form-control form-control-lg" form="mapping" id="file" type="file" name="file" onchange="trigger()">
+                @error('file')
+                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                @enderror
+            </div>            
+        </div>    
+
+        @if(session('reportData'))
             <div class="alert alert-info" role="alert">
                 <h4 class="alert-heading">Report</h4>
-                
                 <div class="w-25">
                     <table class="table table-sm table-borderless align-middle">
                         <tbody>
                             <tr>
                                 <th scope="row" style="text-align: end">Import Time (sec):</th>
-                                <td>{{ session('reportData.importTime') }}</td>
+                                <td>{{ session('reportData.execTime') }}</td>
                             </tr>
                                 <tr>
                                 <th scope="row" style="text-align: end">Rows to import:</th>
-                                <td>{{ session('reportData.rowsToImport') }}</td>
+                                <td>{{ session('reportData.toImport') }}</td>
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: end">Imported:</th>
-                                <td>{{ session('reportData.importSuccess') }}</td>
+                                <td>{{ session('reportData.success') }}</td>
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: end">Failed:</th>
-                                <td>{{ session('reportData.importFailure') }}</td>
+                                <td>{{ session('reportData.fails') }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>            
-            <div class="">
-            </div>
-        <!-- @endif -->
+            </div>           
+        @endif
         </div>
 
         <!-- Modal -->
         <div class="modal fade" id="colMapping" tabindex="-1" aria-labelledby="colMappingLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="colMappingLabel">Column Mapping</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="colMappingLabel">Column Mapping</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetFileInput()"></button>
+                    </div>
+                    <div class="modal-body">
+                        @include('mapping')
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="resetFileInput()">Cancel</button>
+                        <button type="submit" form="mapping" class="btn btn-primary">Import</button>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Import</button>
-            </div>
-            </div>
-        </div>
         </div>
 
+        <script src="https://code.jquery.com/jquery-3.6.3.slim.js" integrity="sha256-DKU1CmJ8kBuEwumaLuh9Tl/6ZB6jzGOBV/5YpNE2BWc=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+
         <script>
-            function trigger() {
+            function trigger() 
+            {
                 console.log('Works!');
                 const modalToggle = document.getElementById('colMapping'); 
                 const mappingModal = new bootstrap.Modal('#colMapping', {
@@ -107,8 +93,11 @@
                 });
                 mappingModal.show(modalToggle)
             }
+
+            function resetFileInput() 
+            {
+                $("#file").val('');
+            }
         </script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
     </body>
 </html>

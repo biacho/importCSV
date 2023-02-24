@@ -15,6 +15,11 @@ class ImportCSVController extends Controller
         return view('index', ['headers' => $headers]);
     }
 
+    public function mappingNames(Request $request)
+    {
+        dd($request->all());
+    }
+
     public function importCSV(Request $request)
     {
         $validatedData = $request->validate([
@@ -33,8 +38,9 @@ class ImportCSVController extends Controller
         $rows = [];
         $success = 0;
         $fails = 0;
-        while (($getData = fgetcsv($file, 10000, ";")) !== FALSE)
+        while (($getData = fgetcsv($file, 10000, ",")) !== FALSE)
         {            
+            // dd($getData);
             // Validation
             if($getData[4] == '' ||
                 $getData[6] == '' ||
@@ -45,22 +51,22 @@ class ImportCSVController extends Controller
                 continue;
             }
 
-            $item['number'] = $getData[0];
-            $item['gender'] = $getData[1];
-            $item['name_set'] = $getData[2];
-            $item['title'] = $getData[3];                
-            $item['given_name'] = $getData[4]; // Obligatory
-            $item['middle_initial'] = $getData[5];
-            $item['surname'] = $getData[6]; // obligatory
-            $item['street_address'] = $getData[7];
-            $item['city'] = $getData[8];
-            $item['state'] = $getData[9];
-            $item['zip_code'] = $getData[11];
-            $item['country'] = $getData[12];
-            $item['email_address'] = $getData[14];
-            $item['username'] = $getData[15]; // obligatory
-            $item['password'] = $getData[16];
-            $item['browser_user_agent'] = $getData[17];
+            $item[($request->get('mapCol_1')) ? $request->get('mapCol_1') : 'number'] = $getData[0];
+            $item[($request->get('mapCol_2')) ? $request->get('mapCol_2') : 'gender'] = $getData[1];
+            $item[($request->get('mapCol_3')) ? $request->get('mapCol_3') : 'name_set'] = $getData[2];
+            $item[($request->get('mapCol_4')) ? $request->get('mapCol_4') : 'title'] = $getData[3];                
+            $item[($request->get('mapCol_5')) ? $request->get('mapCol_5') : 'given_name'] = $getData[4]; // Obligatory
+            $item[($request->get('mapCol_6')) ? $request->get('mapCol_6') : 'middle_initial'] = $getData[5];
+            $item[($request->get('mapCol_7')) ? $request->get('mapCol_7') : 'surname'] = $getData[6]; // obligatory
+            $item[($request->get('mapCol_8')) ? $request->get('mapCol_8') : 'street_address'] = $getData[7];
+            $item[($request->get('mapCol_9')) ? $request->get('mapCol_9') : 'city'] = $getData[8];
+            $item[($request->get('mapCol_10')) ? $request->get('mapCol_10') : 'state'] = $getData[9];
+            $item[($request->get('mapCol_11')) ? $request->get('mapCol_11') : 'zip_code'] = $getData[11];
+            $item[($request->get('mapCol_12')) ? $request->get('mapCol_12') : 'country'] = $getData[12];
+            $item[($request->get('mapCol_13')) ? $request->get('mapCol_13') : 'email_address'] = $getData[14];
+            $item[($request->get('mapCol_14')) ? $request->get('mapCol_14') : 'username'] = $getData[15]; // obligatory
+            $item[($request->get('mapCol_15')) ? $request->get('mapCol_15') : 'password'] = $getData[16];
+            $item[($request->get('mapCol_16')) ? $request->get('mapCol_16') : 'browser_user_agent'] = $getData[17];
             array_push($rows, $item);
             $success++;
         }
@@ -74,11 +80,9 @@ class ImportCSVController extends Controller
         $report['success'] = $success;
         $report['fails'] = $fails;
 
-        dd($report);
-
         fclose($file);  
 
-        return redirect('show');
+        return redirect('importCSV')->with(['reportData' => $report]);
      }
 
 }
